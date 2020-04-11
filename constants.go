@@ -43,6 +43,10 @@ const (
 	responseParamRRN           string = "RRN"
 	responseParamApprovalCode  string = "APPROVAL_CODE"
 	responseParamCardNumber    string = "CARD_NUMBER"
+	responseParamFLD075        string = "FLD_075"
+	responseParamFLD076        string = "FLD_076"
+	responseParamFLD087        string = "FLD_087"
+	responseParamFLD088        string = "FLD_088"
 )
 
 // TemplateLanguage is a type for describing available template languages

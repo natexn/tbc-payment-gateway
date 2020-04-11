@@ -95,3 +95,31 @@ func TestParseCancelTransactionResponse(t *testing.T) {
 		}
 	}
 }
+
+func TestParseCloseDayResponse(t *testing.T) {
+	testCases := []struct {
+		Input  string
+		Result CloseDayResult
+	}{
+		{
+			Input: "RESULT: OK RESULT_CODE: 500 FLD_075: 12 FLD_076: 31 FLD_087: 3201 FLD_088: 10099",
+			Result: CloseDayResult{
+				Result: CommandResult{Raw: "RESULT: OK RESULT_CODE: 500 FLD_075: 12 FLD_076: 31 FLD_087: 3201 FLD_088: 10099", IsSuccessful: true},
+				Response: CloseDayResponse{
+					Result:     "OK",
+					ResultCode: "500",
+					FLD075:     12,
+					FLD076:     31,
+					FLD087:     3201,
+					FLD088:     10099,
+				},
+			},
+		},
+	}
+
+	for _, tc := range testCases {
+		if tc.Result != ParseCloseDayResponse(tc.Input) {
+			t.Fatalf("unexpected result for input: %s. \nExpected: %v \nGot: %v", tc.Input, tc.Result, ParseCloseDayResponse(tc.Input))
+		}
+	}
+}

@@ -6,7 +6,7 @@ type CommandResult struct {
 	IsSuccessful bool
 }
 
-// CreateTransactionResponse describes result fields of expected response to transaction creation requests
+// CreateTransactionResponse describes fields of expected response to transaction creation requests
 type CreateTransactionResponse struct {
 	TransactionID string
 }
@@ -17,7 +17,7 @@ type CreateTransactionResult struct {
 	Response CreateTransactionResponse
 }
 
-// TransactionStatusResponse describes result fields of expected response to requests related to transaction status inquiry/update
+// TransactionStatusResponse describes fields of expected response to requests related to transaction status inquiry/update
 type TransactionStatusResponse struct {
 	Result       string
 	ResultCode   string
@@ -32,7 +32,7 @@ type TransactionStatusResult struct {
 	Response TransactionStatusResponse
 }
 
-// CancelTransactionResponse describes result fields of expected response to transaction cancellation related requests
+// CancelTransactionResponse describes fields of expected response to transaction cancellation related requests
 type CancelTransactionResponse struct {
 	Result     string
 	ResultCode string
@@ -42,4 +42,24 @@ type CancelTransactionResponse struct {
 type CancelTransactionResult struct {
 	Result   CommandResult
 	Response CancelTransactionResponse
+}
+
+// CloseDayResponse describes fields of expected response to day close request
+type CloseDayResponse struct {
+	Result     string
+	ResultCode string
+	// FLD075 - Credits, Reversal Number
+	FLD075 int
+	// FLD076 - Debits, Number
+	FLD076 int
+	// FLD087 - Credits, Reversal Amount
+	FLD087 int
+	// FLD087 - Debits, Amount.
+	FLD088 int
+}
+
+// CloseDayResult describes result of day close request
+type CloseDayResult struct {
+	Result   CommandResult
+	Response CloseDayResponse
 }

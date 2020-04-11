@@ -171,40 +171,25 @@ func (g *Gateway) RefundTransaction(amount int, transactionID string) (*CancelTr
 	return &ctr, nil
 }
 
-// // CloseDay returns transaction status based on transaction id passed
-// func (g *Gateway) CloseDay() (*StatusResult, error) {
-// 	// build params query
-// 	paramsMap := make(map[string]interface{})
-// 	paramsMap[requestParamCommand] = commandCloseDay
+// CloseDay returns transaction status based on transaction id passed
+func (g *Gateway) CloseDay() (*CloseDayResult, error) {
+	// build params query
+	paramsMap := make(map[string]interface{})
+	paramsMap[requestParamCommand] = commandCloseDay
 
-// 	// get query string
-// 	queryStr := buildQueryStr(paramsMap)
-// 	// fmt.Println(queryStr)
-// 	// execute call
-// 	resp, err := g.buildAndExecCurl(queryStr)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	if resp == nil || len(*resp) == 0 {
-// 		return nil, errors.New("empty response")
-// 	}
-// 	sRes := StatusResult{
-// 		Response: Response{
-// 			Raw: *resp,
-// 		},
-// 	}
-// 	resultCodeAt := strings.Index(*resp, responseParamResultCode)
-// 	if resultCodeAt == -1 {
-// 		return &sRes, nil
-// 	}
-// 	sRes.Response.IsSuccessful = true
-// 	codeStartsAt := resultCodeAt + len(responseParamResultCode) + 2
-// 	sRes.ResultCode = string((*resp)[codeStartsAt : codeStartsAt+3])
-// 	if sRes.ResultCode == resultCodeCloseDaySuccessful {
-// 		sRes.IsApproved = true
-// 	}
-// 	return &sRes, nil
-// }
+	// get query string
+	queryStr := buildQueryStr(paramsMap)
+	// execute call
+	res, err := g.buildAndExecCurl(queryStr)
+	if err != nil {
+		return nil, err
+	}
+	if res == nil {
+		return nil, errors.New("empty response")
+	}
+	cdr := ParseCloseDayResponse(*res)
+	return &cdr, nil
+}
 
 func (g *Gateway) buildAndExecCurl(queryStr string) (*string, error) {
 	easy := curl.EasyInit()
@@ -221,13 +206,13 @@ func (g *Gateway) buildAndExecCurl(queryStr string) (*string, error) {
 	easy.Setopt(curl.OPT_SSLKEYPASSWD, g.certPass)
 	easy.Setopt(curl.OPT_URL, g.submitURL)
 	easy.Setopt(curl.OPT_WRITEFUNCTION, writeDataToString)
-	var result string
-	easy.Setopt(curl.OPT_WRITEDATA, &result)
+	var result *string
+	easy.Setopt(curl.OPT_WRITEDATA, result)
 
 	if err := easy.Perform(); err != nil {
 		return nil, err
 	}
-	return &result, nil
+	return result, nil
 }
 
 func writeDataToString(ptr []byte, outputTo interface{}) bool {
