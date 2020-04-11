@@ -13,8 +13,8 @@ type CreateTransactionResponse struct {
 
 // CreateTransactionResult describes result of transaction creation related functions
 type CreateTransactionResult struct {
-	CommandResult
-	CreateTransactionResponse
+	Result   CommandResult
+	Response CreateTransactionResponse
 }
 
 // TransactionStatusResponse describes result fields of expected response to requests related to transaction status inquiry/update
@@ -28,8 +28,8 @@ type TransactionStatusResponse struct {
 
 // TransactionStatusResult describes result of transaction status inquiry/update functions
 type TransactionStatusResult struct {
-	CommandResult
-	TransactionStatusResponse
+	Result   CommandResult
+	Response TransactionStatusResponse
 }
 
 // CancelTransactionResponse describes result fields of expected response to transaction cancellation related requests
@@ -40,6 +40,6 @@ type CancelTransactionResponse struct {
 
 // CancelTransactionResult describes result of transaction cancellation related functions
 type CancelTransactionResult struct {
-	CommandResult
-	CancelTransactionResponse
+	Result   CommandResult
+	Response CancelTransactionResponse
 }
