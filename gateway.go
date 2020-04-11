@@ -207,13 +207,13 @@ func (g *Gateway) buildAndExecCurl(queryStr string) (*string, error) {
 	easy.Setopt(curl.OPT_SSLKEYPASSWD, g.certPass)
 	easy.Setopt(curl.OPT_URL, g.submitURL)
 	easy.Setopt(curl.OPT_WRITEFUNCTION, writeDataToString)
-	var result *string
-	easy.Setopt(curl.OPT_WRITEDATA, result)
+	var result string
+	easy.Setopt(curl.OPT_WRITEDATA, &result)
 
 	if err := easy.Perform(); err != nil {
 		return nil, err
 	}
-	return result, nil
+	return &result, nil
 }
 
 func writeDataToString(ptr []byte, outputTo interface{}) bool {
