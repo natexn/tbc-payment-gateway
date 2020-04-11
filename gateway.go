@@ -3,6 +3,7 @@ package gateway
 import (
 	"errors"
 	"net/url"
+	"sort"
 	"strconv"
 
 	"github.com/andelf/go-curl"
@@ -226,8 +227,14 @@ func writeDataToString(ptr []byte, outputTo interface{}) bool {
 
 func buildQueryStr(params map[string]interface{}) string {
 	queryStr := ""
-	for key, val := range params {
+	paramKeys := []string{}
+	for key := range params {
+		paramKeys = append(paramKeys, key)
+	}
+	sort.Strings(paramKeys)
+	for _, key := range paramKeys {
 		var paramValue string
+		val := params[key]
 		switch val.(type) {
 		case command:
 			paramValue = string(val.(command))

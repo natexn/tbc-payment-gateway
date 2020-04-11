@@ -23,12 +23,12 @@ func TestBuildQueryStr(t *testing.T) {
 				requestParamDescription:     "UFCTEST",
 				requestParamMessageType:     messageTypeSMS,
 			},
-			Result: "command=v&amount=500&currency=981&client_ip_addr=127.0.0.1&language=EN&description=UFCTEST&msg_type=SMS",
+			Result: "amount=500&client_ip_addr=127.0.0.1&command=v&currency=981&description=UFCTEST&language=EN&msg_type=SMS",
 		},
 	}
 	for _, tc := range testCases {
 		if tc.Result != buildQueryStr(tc.Input) {
-			t.Fatalf("unexpected result for input: %s. \nExpected: %v \nGot: %v", tc.Input, tc.Result, buildQueryStr(tc.Input))
+			t.Fatalf("unexpected result for input: %v. \nExpected: %s \nGot: %s", tc.Input, tc.Result, buildQueryStr(tc.Input))
 		}
 	}
 }
