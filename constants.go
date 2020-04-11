@@ -33,7 +33,7 @@ const (
 	requestParamCurrency        string = "currency"
 	requestParamClientIPAddress string = "client_ip_addr"
 	requestParamTransID         string = "trans_id"
-	requestParamDescription     string = "desc"
+	requestParamDescription     string = "description"
 	requestParamMessageType     string = "msg_type"
 	requestParamLanguage        string = "language"
 

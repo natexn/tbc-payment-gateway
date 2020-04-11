@@ -229,6 +229,14 @@ func buildQueryStr(params map[string]interface{}) string {
 	for key, val := range params {
 		var paramValue string
 		switch val.(type) {
+		case command:
+			paramValue = string(val.(command))
+		case Currency:
+			paramValue = strconv.Itoa(int(val.(Currency)))
+		case TemplateLanguage:
+			paramValue = string(val.(TemplateLanguage))
+		case messageType:
+			paramValue = string(val.(messageType))
 		case string:
 			paramValue = url.QueryEscape(val.(string))
 		case int:
